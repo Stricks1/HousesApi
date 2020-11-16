@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :v1, defaults: { format: :json } do
     resource :users, only: %i[create]
     post "/login", to: "auth#login"
+    get "/logout", to: "auth#logout"
     get "/auto_login", to: "auth#auto_login"
     get "/user_is_authed", to: "auth#user_is_authed"
   end

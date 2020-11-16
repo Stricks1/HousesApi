@@ -1,10 +1,16 @@
 module V1
   class UsersController < ApplicationController
+    skip_before_action :require_login
+
     def create
       @user = User.new(user_params)
 
       if @user.save
-        payload = {user_id: user.id}
+        expiry = (Time.now + 1.week).to_i
+        payload = {
+          authentication_token: @user.authentication_token,
+          exp: expiry
+        }
         token = encode_token(payload)
         render :create, status: :created, locals: { token: token }
       else

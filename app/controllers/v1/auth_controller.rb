@@ -4,16 +4,27 @@ module V1
     def login
       @user = User.find_by(email: params[:email])
       if @user&.valid_password?(params[:password])
+        @user.authentication_token = nil
+        @user.save
         expiry = (Time.now + 1.week).to_i
         payload = {
-            user_id: @user.id,
+            authentication_token: @user.authentication_token,
             exp: expiry
         }
         token = encode_token(payload)
         render :create, success: "Welcome back, #{@user.username}", locals: { token: token }
-        #render json: {user: user, jwt: token, success: "Welcome back, #{user.username}"}
       else
         render json: {failure: "Log in failed! Username or password invalid!"}
+      end
+    end
+
+    def logout
+     if session_user
+        @user.authentication_token = nil
+        @user.save
+        render json: { status: 200, logged_out: true }
+      else
+        render json: {errors: "No User Logged In"}
       end
     end
   

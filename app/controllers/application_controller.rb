@@ -22,10 +22,9 @@ class ApplicationController < ActionController::API
 
   def session_user
     decoded_hash = decoded_token
-    if !decoded_hash.empty? 
-      puts decoded_hash.class
-      user_id = decoded_hash[0]['user_id']
-      @user = User.find_by(id: user_id)
+    if !decoded_hash.empty?
+      authentication_token = decoded_hash[0]['authentication_token']
+      @user = User.find_by(authentication_token: authentication_token)
     else
       nil 
     end
