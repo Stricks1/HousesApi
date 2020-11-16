@@ -4,9 +4,11 @@ module V1
       @user = User.new(user_params)
 
       if @user.save
-        render :create
+        payload = {user_id: user.id}
+        token = encode_token(payload)
+        render :create, status: :created, locals: { token: token }
       else
-        render json: @user.errors.messages.as_json()
+        render json: @user.errors.messages.as_json(), status: :not_acceptable
       end
     end
     
