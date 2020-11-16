@@ -4,7 +4,6 @@ RSpec.describe 'Places', type: :request do
   let(:user) { create(:user) }
   let(:place) { create(:place, user_id: user.id) }
   let(:place2) { create(:place, user_id: user.id) }
-  let(:im1) { create(:image, place_id: place.id) }
 
   describe '#Places' do
     it 'creates a place belonging to logged user' do
