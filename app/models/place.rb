@@ -1,5 +1,6 @@
 class Place < ApplicationRecord
   belongs_to :user
+  has_many :rent_dates
   has_many :images, dependent: :destroy
 
   validates :location_type, presence: true, allow_blank: false

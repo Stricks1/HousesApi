@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :v1, defaults: { format: :json } do
     resources :places
     resources :images, only: [:create, :destroy]
+    resources :favorites, only: [:index, :create, :destroy]
     resource :users, only: %i[create]
     get "/logout", to: "auth#logout"
     post "/login", to: "auth#login"
