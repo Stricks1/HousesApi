@@ -4,8 +4,6 @@ module V1
     def login
       @user = User.find_by(username: params[:username])
       if @user&.valid_password?(params[:password])
-        @user.authentication_token = nil
-        @user.save
         expiry = (Time.now + 1.week).to_i
         payload = {
             authentication_token: @user.authentication_token,
