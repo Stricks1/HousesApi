@@ -14,14 +14,14 @@ module V1
         token = encode_token(payload)
         render :create, status: :created, locals: { token: token }
       else
-        render json: @user.errors.messages.as_json(), status: :not_acceptable
+        render json: @user.errors.messages.as_json, status: :not_acceptable
       end
     end
-    
+
     private
 
     def user_params
       params.require(:user).permit(:username, :email, :password, :password_confirmation)
     end
-  end 
+  end
 end

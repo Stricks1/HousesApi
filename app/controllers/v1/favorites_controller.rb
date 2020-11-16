@@ -2,7 +2,7 @@ module V1
   class FavoritesController < ApplicationController
     def index
       favorites = Favorite.where(user_id: @user.id)
-      render json: FavoriteSerializer.new(favorites).serialized_json   
+      render json: FavoriteSerializer.new(favorites).serialized_json
     end
 
     def create
@@ -11,7 +11,7 @@ module V1
       if favorite.save
         render json: FavoriteSerializer.new(favorite).serialized_json
       else
-        render json: favorite.errors.messages.as_json(), status: :not_acceptable
+        render json: favorite.errors.messages.as_json, status: :not_acceptable
       end
     end
 
@@ -20,7 +20,7 @@ module V1
       if favorite.destroy
         render json: { status: 'favorite removed' }
       else
-        render json: favorite.errors.messages.as_json(), status: :not_acceptable
+        render json: favorite.errors.messages.as_json, status: :not_acceptable
       end
     end
 

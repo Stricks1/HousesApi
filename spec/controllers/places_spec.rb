@@ -1,5 +1,4 @@
 require 'rails_helper'
-# rubocop:disable Layout/LineLength
 RSpec.describe 'Places', type: :request do
   let(:user) { create(:user) }
   let(:place) { create(:place, user_id: user.id) }
@@ -10,17 +9,16 @@ RSpec.describe 'Places', type: :request do
       user
       post '/v1/login', params: { username: 'test', password: '123456789' }
       parsed_body = JSON.parse(response.body)
-      post '/v1/places', params: { place: { 
-          location_type: 1,
-          address: "address test",
-          city: "Blumenau",
-          country: "Brazil",
-          daily_price: 22.22
-        } 
-      }, headers: { 'Authorization' => 'Bearer ' + parsed_body['data']['token'] }
+      post '/v1/places', params: { place: {
+        location_type: 1,
+        address: 'address test',
+        city: 'Blumenau',
+        country: 'Brazil',
+        daily_price: 22.22
+      } }, headers: { 'Authorization' => 'Bearer ' + parsed_body['data']['token'] }
       resp_body = JSON.parse(response.body)
-      placeCreated = Place.find(resp_body['data']['id'])
-      expect(placeCreated.user_id).to eq(user.id)
+      place_created = Place.find(resp_body['data']['id'])
+      expect(place_created.user_id).to eq(user.id)
     end
 
     it 'show the places list' do
@@ -30,7 +28,7 @@ RSpec.describe 'Places', type: :request do
       post '/v1/login', params: { username: 'test', password: '123456789' }
       parsed_body = JSON.parse(response.body)
       get '/v1/places', headers: { 'Authorization' => 'Bearer ' + parsed_body['data']['token'] }
-      
+
       resp_body = JSON.parse(response.body)
       expect(resp_body['data'][0]['attributes']['address']).to include(place.address)
       expect(resp_body['data'][1]['attributes']['city']).to include(place2.city)
@@ -42,7 +40,7 @@ RSpec.describe 'Places', type: :request do
       post '/v1/login', params: { username: 'test', password: '123456789' }
       parsed_body = JSON.parse(response.body)
       get "/v1/places/#{place.id}", headers: { 'Authorization' => 'Bearer ' + parsed_body['data']['token'] }
-      
+
       resp_body = JSON.parse(response.body)
       expect(resp_body['data']['attributes']['address']).to include(place.address)
     end
@@ -52,15 +50,14 @@ RSpec.describe 'Places', type: :request do
       place
       post '/v1/login', params: { username: 'test', password: '123456789' }
       parsed_body = JSON.parse(response.body)
-      put "/v1/places/#{place.id}", params: { place: { 
-          location_type: 1,
-          address: "address changed",
-          city: "Blumenau",
-          country: "Brazil",
-          daily_price: 22.22
-        } 
-      }, headers: { 'Authorization' => 'Bearer ' + parsed_body['data']['token'] }
-      
+      put "/v1/places/#{place.id}", params: { place: {
+        location_type: 1,
+        address: 'address changed',
+        city: 'Blumenau',
+        country: 'Brazil',
+        daily_price: 22.22
+      } }, headers: { 'Authorization' => 'Bearer ' + parsed_body['data']['token'] }
+
       resp_body = JSON.parse(response.body)
       expect(resp_body['data']['attributes']['address']).to include('address changed')
     end
@@ -75,5 +72,4 @@ RSpec.describe 'Places', type: :request do
       expect(response.body).to include('place removed')
     end
   end
-  # rubocop:enable Layout/LineLength
 end

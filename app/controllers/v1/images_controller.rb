@@ -1,11 +1,11 @@
 module V1
-  class ImagesController < ApplicationController  
+  class ImagesController < ApplicationController
     def create
       image = Image.new(image_params)
       if image.save
         render json: ImageSerializer.new(image).serialized_json
       else
-        render json: image.errors.messages.as_json(), status: :not_acceptable
+        render json: image.errors.messages.as_json, status: :not_acceptable
       end
     end
 
@@ -14,7 +14,7 @@ module V1
       if image.destroy
         render json: { status: 'image removed' }
       else
-        render json: image.errors.messages.as_json(), status: :not_acceptable
+        render json: image.errors.messages.as_json, status: :not_acceptable
       end
     end
 

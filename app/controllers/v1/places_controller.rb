@@ -5,17 +5,17 @@ module V1
 
     def index
       places = Place.includes(:images).all
-      render json: PlaceSerializer.new(places, @image_list).serialized_json        
+      render json: PlaceSerializer.new(places, @image_list).serialized_json
     end
 
     def create
       place = Place.new(place_params)
       place.user = @user
-      
+
       if place.save
         render json: PlaceSerializer.new(place).serialized_json
       else
-        render json: place.errors.messages.as_json(), status: :not_acceptable
+        render json: place.errors.messages.as_json, status: :not_acceptable
       end
     end
 
@@ -33,7 +33,7 @@ module V1
       )
         render json: PlaceSerializer.new(@place, @image_list).serialized_json
       else
-        render json: @place.errors.messages.as_json(), status: :not_acceptable
+        render json: @place.errors.messages.as_json, status: :not_acceptable
       end
     end
 
@@ -41,7 +41,7 @@ module V1
       if @place.destroy
         render json: { status: 'place removed' }
       else
-        render json: @place.errors.messages.as_json(), status: :not_acceptable
+        render json: @place.errors.messages.as_json, status: :not_acceptable
       end
     end
 
