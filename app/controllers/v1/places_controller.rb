@@ -1,7 +1,7 @@
 module V1
   class PlacesController < ApplicationController
     before_action :place, only: %i[show update destroy]
-    before_action :set_image_list, only: %i[index show]
+    before_action :set_image_list, only: %i[index update show]
 
     def index
       places = Place.includes(:images).all
@@ -24,6 +24,17 @@ module V1
     end
 
     def update
+      if @place.update(
+        location_type: params['place']['location_type'],
+        address: params['place']['address'],
+        city: params['place']['city'],
+        country: params['place']['country'],
+        daily_price: params['place']['daily_price']
+      )
+        render json: PlaceSerializer.new(@place, @image_list).serialized_json
+      else
+        render json: @place.errors.messages.as_json(), status: :not_acceptable
+      end
     end
 
     def destroy
