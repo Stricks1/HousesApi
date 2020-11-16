@@ -1,10 +1,8 @@
-
 require 'rails_helper'
 # rubocop:disable Layout/LineLength
 RSpec.describe 'Images', type: :request do
   let(:user) { create(:user) }
   let(:place) { create(:place, user_id: user.id) }
-  let(:im1) { create(:image, place_id: place.id) }
 
   describe '#Images' do
     it 'creates an image' do
@@ -32,7 +30,8 @@ RSpec.describe 'Images', type: :request do
       expect(response.body).to include('https://hotelgloria.com.br/wp-content/uploads/2019/07/hotel-gloria-blumenau-sc.jpg')
     end
 
-    it 'deletes an image' do      user
+    it 'deletes an image' do      
+      user
       post '/v1/login', params: { username: 'test', password: '123456789' }
       parsed_body = JSON.parse(response.body)
       post '/v1/images', params: { image: { 
