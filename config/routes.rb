@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :images, only: [:create, :destroy]
     resources :favorites, only: [:index, :create, :destroy]
     resource :users, only: %i[create]
+    post "/occupied/:id", to: "places#occupied"
     get "/logout", to: "auth#logout"
     post "/login", to: "auth#login"
     get "/logout", to: "auth#logout"
