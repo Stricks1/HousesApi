@@ -2,8 +2,6 @@ class ApplicationController < ActionController::API
   before_action :require_login
 
   def encode_token(payload)
-    puts "no encode aqui"
-    puts Rails.application.credentials.secret_login_api
     JWT.encode(payload, Rails.application.credentials.secret_login_api)
   end
 
@@ -12,13 +10,9 @@ class ApplicationController < ActionController::API
   end
 
   def decoded_token
-    puts 'auth Header supposed to be here show us secret'
-    puts auth_header
     return unless auth_header
 
     token = auth_header.split(' ')[1]
-    puts 'token here'
-    puts token
     begin
       JWT.decode(token, Rails.application.credentials.secret_login_api, true, algorithm: 'HS256')
     rescue JWT::DecodeError
@@ -27,10 +21,7 @@ class ApplicationController < ActionController::API
   end
 
   def session_user
-    puts "log loking session User"
     decoded_hash = decoded_token
-    puts "decoded hash check it here"
-    puts decoded_hash.empty?
     return nil if decoded_hash.empty?
 
     authentication_token = decoded_hash[0]['authentication_token']
