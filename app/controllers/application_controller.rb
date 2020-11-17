@@ -2,6 +2,8 @@ class ApplicationController < ActionController::API
   before_action :require_login
 
   def encode_token(payload)
+    puts "no encode aqui"
+    puts Rails.application.secrets.secret_key_base
     JWT.encode(payload, Rails.application.secrets.secret_key_base)
   end
 
@@ -10,7 +12,8 @@ class ApplicationController < ActionController::API
   end
 
   def decoded_token
-    puts 'auth Header supposed to be here'
+    puts 'auth Header supposed to be here show us secret'
+    puts Rails.application.secrets.secret_key_base
     puts auth_header
     return unless auth_header
 
@@ -27,6 +30,8 @@ class ApplicationController < ActionController::API
   def session_user
     puts "log loking session User"
     decoded_hash = decoded_token
+    puts "decoded hash check it here"
+    puts decoded_hash
     return nil if decoded_hash.empty?
 
     authentication_token = decoded_hash[0]['authentication_token']
