@@ -14,7 +14,7 @@ RSpec.describe 'Rent Date', type: :request do
       post '/v1/rent_dates', params: { rent_date: {
         place_id: place.id,
         start_date: '2020-11-20',
-        end_date: '2020-11-22',
+        end_date: '2020-11-22'
       } }, headers: { 'Authorization' => 'Bearer ' + parsed_body['data']['token'] }
       resp_body = JSON.parse(response.body)
       rent_created = RentDate.find(resp_body['data']['id'])
@@ -28,10 +28,10 @@ RSpec.describe 'Rent Date', type: :request do
       post '/v1/rent_dates', params: { rent_date: {
         place_id: place.id,
         start_date: '2020-11-20',
-        end_date: '2020-11-22',
+        end_date: '2020-11-22'
       } }, headers: { 'Authorization' => 'Bearer ' + parsed_body['data']['token'] }
       resp_body = JSON.parse(response.body)
-      
+
       expect(resp_body['data']['attributes']['rent_price']).to eq((place.daily_price * 2).to_s)
     end
 
