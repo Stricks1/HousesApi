@@ -10,9 +10,13 @@ class ApplicationController < ActionController::API
   end
 
   def decoded_token
+    puts 'auth Header supposed to be here'
+    puts auth_header
     return unless auth_header
 
     token = auth_header.split(' ')[1]
+    puts 'token here'
+    puts token
     begin
       JWT.decode(token, Rails.application.secrets.secret_key_base, true, algorithm: 'HS256')
     rescue JWT::DecodeError
@@ -21,6 +25,7 @@ class ApplicationController < ActionController::API
   end
 
   def session_user
+    puts "log loking session User"
     decoded_hash = decoded_token
     return nil if decoded_hash.empty?
 
