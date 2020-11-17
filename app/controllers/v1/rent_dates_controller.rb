@@ -2,7 +2,6 @@ module V1
   class RentDatesController < ApplicationController
     before_action :rentEvent, only: %i[show update destroy]
 
-
     def index
       rentsUser = RentDate.includes(:place).where(user_id: @user.id)
       render json: RentDateSerializer.new(rentsUser).serialized_json
