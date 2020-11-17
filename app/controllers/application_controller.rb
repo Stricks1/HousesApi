@@ -3,8 +3,8 @@ class ApplicationController < ActionController::API
 
   def encode_token(payload)
     puts "no encode aqui"
-    puts Rails.application.secrets.secret_key_base
-    JWT.encode(payload, Rails.application.secrets.secret_key_base)
+    puts Rails.application.credentials.secret_key_base
+    JWT.encode(payload, Rails.application.credentials.secret_key_base)
   end
 
   def auth_header
@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
 
   def decoded_token
     puts 'auth Header supposed to be here show us secret'
-    puts Rails.application.secrets.secret_key_base
+    puts Rails.application.credentials.secret_key_base
     puts auth_header
     return unless auth_header
 
@@ -21,7 +21,7 @@ class ApplicationController < ActionController::API
     puts 'token here'
     puts token
     begin
-      JWT.decode(token, Rails.application.secrets.secret_key_base, true, algorithm: 'HS256')
+      JWT.decode(token, Rails.application.credentials.secret_key_base, true, algorithm: 'HS256')
     rescue JWT::DecodeError
       []
     end
@@ -31,7 +31,7 @@ class ApplicationController < ActionController::API
     puts "log loking session User"
     decoded_hash = decoded_token
     puts "decoded hash check it here"
-    puts decoded_hash
+    puts decoded_hash.empty?
     return nil if decoded_hash.empty?
 
     authentication_token = decoded_hash[0]['authentication_token']
@@ -43,6 +43,6 @@ class ApplicationController < ActionController::API
   end
 
   def require_login
-    render json: { message: 'Please Login', user: session_user }, status: :unauthorized unless logged_in?
+    render json: { message: 'Please Login' }, status: :unauthorized unless logged_in?
   end
 end
