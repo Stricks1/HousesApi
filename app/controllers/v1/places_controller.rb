@@ -1,7 +1,7 @@
 module V1
   class PlacesController < ApplicationController
     before_action :place, only: %i[show update destroy]
-    before_action :set_image_list, only: %i[index update show]
+    before_action :set_image_list, only: %i[index show]
 
     def index
       places = Place.includes(:images).all

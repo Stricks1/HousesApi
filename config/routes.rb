@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   #devise_for :users
   namespace :v1, defaults: { format: :json } do
     resources :places
+    resources :rent_dates, only: [:index, :show, :create, :destroy]
     resources :images, only: [:create, :destroy]
     resources :favorites, only: [:index, :create, :destroy]
     resource :users, only: %i[create]
