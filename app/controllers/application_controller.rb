@@ -3,8 +3,8 @@ class ApplicationController < ActionController::API
 
   def encode_token(payload)
     puts "no encode aqui"
-    puts Rails.application.credential.secret_login_api
-    JWT.encode(payload, Rails.application.credential.secret_login_api)
+    puts Rails.application.credentials.secret_login_api
+    JWT.encode(payload, Rails.application.credentials.secret_login_api)
   end
 
   def auth_header
@@ -20,7 +20,7 @@ class ApplicationController < ActionController::API
     puts 'token here'
     puts token
     begin
-      JWT.decode(token, Rails.application.credential.secret_login_api, true, algorithm: 'HS256')
+      JWT.decode(token, Rails.application.credentials.secret_login_api, true, algorithm: 'HS256')
     rescue JWT::DecodeError
       []
     end
