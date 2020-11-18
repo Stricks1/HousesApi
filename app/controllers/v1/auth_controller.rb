@@ -12,7 +12,7 @@ module V1
         token = encode_token(payload)
         render :create, success: "Welcome back, #{@user.username}", locals: { token: token }
       else
-        render json: { failure: 'Log in failed! Username or password invalid!' }
+        render json: { failure: 'Log in failed! Username or password invalid!' }, status: 401
       end
     end
 
@@ -30,7 +30,7 @@ module V1
       if session_user
         render json: session_user
       else
-        render json: { errors: 'No User Logged In' }
+        render json: { errors: 'No User Logged In' }, status: 401
       end
     end
 
