@@ -57,10 +57,14 @@ module V1
     end
 
     def destroy
-      if @place.destroy
-        render json: { status: 'place removed' }
+      if (@place.user != @user) 
+        render json: { status: 'place dont belong to user' }
       else
-        render json: @place.errors.messages.as_json, status: :not_acceptable
+        if @place.destroy
+          render json: { status: 'place removed' }
+        else
+          render json: @place.errors.messages.as_json, status: :not_acceptable
+        end
       end
     end
 
