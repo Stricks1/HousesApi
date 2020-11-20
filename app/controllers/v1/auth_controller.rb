@@ -28,7 +28,7 @@ module V1
 
     def auto_login
       if session_user
-        render json: { user: { id: session_user.id username: session_user.username, email: session_user.email } }
+        render json: { user: { id: session_user.id, username: session_user.username, email: session_user.email } }
       else
         render json: { errors: 'No User Logged In' }
       end
