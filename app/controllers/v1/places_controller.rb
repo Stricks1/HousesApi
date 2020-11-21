@@ -42,17 +42,21 @@ module V1
       render json: { occupied: [list_occupied] }
     end
 
-    def update
-      if @place.update(
-        location_type: params['place']['location_type'],
-        address: params['place']['address'],
-        city: params['place']['city'],
-        country: params['place']['country'],
-        daily_price: params['place']['daily_price']
-      )
-        render json: PlaceSerializer.new(@place, @image_list).serialized_json
+    def update      
+      if (@place.user != @user) 
+        render json: { status: 'place dont belong to user' }
       else
-        render json: @place.errors.messages.as_json, status: :not_acceptable
+        if @place.update(
+          location_type: params['place']['location_type'],
+          address: params['place']['address'],
+          city: params['place']['city'],
+          country: params['place']['country'],
+          daily_price: params['place']['daily_price']
+        )
+          render json: PlaceSerializer.new(@place, @image_list).serialized_json
+        else
+          render json: @place.errors.messages.as_json, status: :not_acceptable
+        end
       end
     end
 
