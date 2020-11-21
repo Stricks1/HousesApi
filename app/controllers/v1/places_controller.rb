@@ -4,7 +4,7 @@ module V1
     before_action :set_image_list, only: %i[index update show]
 
     def index
-      places = Place.includes(:images).all
+      places = Place.order(:created_at).includes(:images).all
       render json: PlaceSerializer.new(places, @image_list).serialized_json
     end
 
