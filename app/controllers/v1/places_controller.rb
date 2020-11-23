@@ -42,33 +42,29 @@ module V1
       render json: { occupied: [list_occupied] }
     end
 
-    def update      
-      if (@place.user != @user) 
+    def update
+      if @place.user != @user
         render json: { status: 'place dont belong to user' }
+      elsif @place.update(
+        location_type: params['place']['location_type'],
+        address: params['place']['address'],
+        city: params['place']['city'],
+        country: params['place']['country'],
+        daily_price: params['place']['daily_price']
+      )
+        render json: PlaceSerializer.new(@place, @image_list).serialized_json
       else
-        if @place.update(
-          location_type: params['place']['location_type'],
-          address: params['place']['address'],
-          city: params['place']['city'],
-          country: params['place']['country'],
-          daily_price: params['place']['daily_price']
-        )
-          render json: PlaceSerializer.new(@place, @image_list).serialized_json
-        else
-          render json: @place.errors.messages.as_json, status: :not_acceptable
-        end
+        render json: @place.errors.messages.as_json, status: :not_acceptable
       end
     end
 
     def destroy
-      if (@place.user != @user) 
+      if @place.user != @user
         render json: { status: 'place dont belong to user' }
+      elsif @place.destroy
+        render json: { status: 'place removed' }
       else
-        if @place.destroy
-          render json: { status: 'place removed' }
-        else
-          render json: @place.errors.messages.as_json, status: :not_acceptable
-        end
+        render json: @place.errors.messages.as_json, status: :not_acceptable
       end
     end
 
