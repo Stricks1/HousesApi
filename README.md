@@ -110,6 +110,10 @@ rspec spec/models/users_spec.rb
 - Faker
 - FactoryBot
 
+## Live Version
+
+[Deployed on Heroku](https://houses-api-be.herokuapp.com/)
+
 ## Future Implementations
 
 - For future implementations, I consider creating a table for a chat between users so the owner and the renter can speak.
