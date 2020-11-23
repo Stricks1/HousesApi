@@ -7,6 +7,12 @@
 
 On this project, I created an API to get houses information for an App. The idea is to create a simplified version of AirBnb. For now, the API manages creating and signing users (utilizing tokens for validating the sessions/saving the machine login), each user can create, edit, and delete their own places. A table for the places and one for images, to link how many pictures you want on each place and favorite places for the users. The API has also prepared a table for creating and cancel reservations on places.
 
+#### Example return login
+![Login](./loginSS.png)
+
+#### Example return places
+![Places](./placesSS.png)
+
 ## Table of Contents
 
 - [Installation](#installation)
