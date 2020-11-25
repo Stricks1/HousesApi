@@ -9,15 +9,14 @@ module V1
 
     def create
       rent_event = RentDate.new(rent_params)
-      unity_price = Place.find(rent_params['place_id']).daily_price
 
       start_date_arr = rent_params['start_date'].split('-')
       end_date_arr = rent_params['end_date'].split('-')
       start_date = Date.new(start_date_arr[0].to_i, start_date_arr[1].to_i, start_date_arr[2].to_i)
       end_date = Date.new(end_date_arr[0].to_i, end_date_arr[1].to_i, end_date_arr[2].to_i)
-      total_price = unity_price * (end_date - start_date).to_i
+      total_days = (end_date - start_date).to_i
       rent_event.user = @user
-      rent_event.rent_price = total_price
+      rent_event.rent_price = rent_event.price_rent(total_days)
 
       if rent_event.save
         render json: RentDateSerializer.new(rent_event).serialized_json
