@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 1
+  user: one
+  address: MyText
+  city: MyString
+  country: MyString
+  daily_price: 9.99
+
+two:
+  type: 1
+  user: two
+  address: MyText
+  city: MyString
+  country: MyString
+  daily_price: 9.99
