@@ -28,12 +28,7 @@ module V1
       end_date_arr = params['place']['date_end'].split('-')
       start_date = Date.new(start_date_arr[0].to_i, start_date_arr[1].to_i, start_date_arr[2].to_i)
       end_date = Date.new(end_date_arr[0].to_i, end_date_arr[1].to_i, end_date_arr[2].to_i)
-      list_rented_date = RentDate.where(
-        'place_id= ? AND ((start_date >= ? AND start_date <= ?) OR
-                          (end_date >= ? AND end_date <= ?))',
-        params[:id], start_date, end_date, start_date, end_date
-      )
-        .order(:start_date)
+      list_rented_date = RentDate.between(params[:id], start_date, end_date).order(:start_date)
       list_occupied = []
       list_rented_date.each do |rent_event|
         list_occupied << (rent_event.start_date < start_date ? start_date : rent_event.start_date)
