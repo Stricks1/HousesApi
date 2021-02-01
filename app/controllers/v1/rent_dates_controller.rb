@@ -17,11 +17,14 @@ module V1
       total_days = (end_date - start_date).to_i
       rent_event.user = @user
       rent_event.rent_price = rent_event.price_rent(total_days)
-
-      if rent_event.save
-        render json: RentDateSerializer.new(rent_event).serialized_json
+      if RentDate.between(rent_event.place_id, start_date, end_date)
+        if rent_event.save
+          render json: RentDateSerializer.new(rent_event).serialized_json
+        else
+          render json: rent_event.errors.messages.as_json, status: :not_acceptable
+        end
       else
-        render json: rent_event.errors.messages.as_json, status: :not_acceptable
+        render json: { status: 'Rent date already exists' }
       end
     end
 
