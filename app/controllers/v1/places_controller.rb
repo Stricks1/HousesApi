@@ -33,7 +33,7 @@ module V1
       list_rented_date.each do |rent_event|
         loop_date = rent_event.start_date < start_date ? start_date : rent_event.start_date
         loop_end_date = rent_event.end_date > end_date ? end_date : rent_event.end_date
-        while loop_date <= loop_end_date
+        while loop_date < loop_end_date
           list_occupied << loop_date
           loop_date += 1.days
         end
