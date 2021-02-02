@@ -30,15 +30,17 @@ module V1
       end_date = Date.new(end_date_arr[0].to_i, end_date_arr[1].to_i, end_date_arr[2].to_i)
       list_rented_date = RentDate.between(params[:id], start_date, end_date).order(:start_date)
       list_occupied = []
+      list_occupied_end = []
       list_rented_date.each do |rent_event|
         loop_date = rent_event.start_date < start_date ? start_date : rent_event.start_date
         loop_end_date = rent_event.end_date > end_date ? end_date : rent_event.end_date
-        while loop_date <= loop_end_date
+        while loop_date < loop_end_date
           list_occupied << loop_date
           loop_date += 1.days
+          list_occupied_end << loop_date
         end
       end
-      render json: { occupied: [list_occupied] }
+      render json: { occupied: [list_occupied], occupied_end: [list_occupied_end] }
     end
 
     def update
