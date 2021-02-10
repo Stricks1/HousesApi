@@ -3,7 +3,7 @@ module V1
     before_action :rent_event, only: %i[show update destroy]
 
     def index
-      rents_user = RentDate.includes(:place).where(user_id: @user.id)
+      rents_user = RentDate.includes(:place).where(user_id: @user.id).order(:start_date)
       render json: RentDateSerializer.new(rents_user).serialized_json
     end
 
